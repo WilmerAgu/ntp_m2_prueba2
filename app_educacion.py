@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+import matplotlib.pyplot as plt
 
 # Cargar el archivo CSV
 df = pd.read_csv("./educacion.csv")
@@ -43,6 +44,13 @@ st.write(df_filtrado.describe())
 st.subheader("Conteo de Estudiantes por Nivel Educativo")
 st.bar_chart(df_filtrado["Nivel educativo"].value_counts())
 
-# Visualizar la distribución de la edad con un histograma:
-st.subheader("Distribución de la Edad")
-st.histogram(df_filtrado["Edad"], bins=10)
+# Visualizar la distribución de la edad con un histograma usando Matplotlib:
+if not df_filtrado.empty:
+    st.subheader("Distribución de la Edad")
+    plt.hist(df_filtrado["Edad"], bins=10, alpha=0.7)
+    plt.xlabel("Edad")
+    plt.ylabel("Frecuencia")
+    plt.title("Distribución de la Edad")
+    st.pyplot(plt)
+else:
+    st.write("No hay datos para mostrar con los filtros seleccionados.")
